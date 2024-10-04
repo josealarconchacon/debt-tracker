@@ -36,4 +36,31 @@
       }
     }
   }
+
+  &.paid-off {
+    background-color: #d1ffd6;
+    border-color: #00c853;
+    color: #ff0000;
+    p {
+      color: #ff0000;
+    }
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .remove-icon {
+      cursor: pointer;
+      color: #ff5c5c;
+      font-size: 1.2rem;
+      background: none;
+      border: none;
+
+      &:hover {
+        color: #ff0000;
+      }
+    }
+  }
 }

@@ -30,15 +30,25 @@ function DebtTrackerDashboard() {
     const updatedCards = cards.map((card) => {
       if (card.id === cardId) {
         const newBalance = Math.max(0, parseFloat(card.balance) - amount);
-        return { ...card, balance: newBalance.toFixed(2) };
+        return {
+          ...card,
+          balance: newBalance.toFixed(2),
+          isPaidOff: newBalance <= 0 ? true : card.isPaidOff,
+        };
       }
       return card;
     });
+
     setCards(updatedCards);
-    setPayments([
-      ...payments,
+    setPayments((prevPayments) => [
+      // Update payments state correctly
+      ...prevPayments,
       { cardId, amount, date: new Date().toISOString().split("T")[0] },
     ]);
+  };
+
+  const handleRemoveCard = (cardId) => {
+    setCards(cards.filter((card) => card.id !== cardId));
   };
 
   const getProgressData = () => {
@@ -57,10 +67,20 @@ function DebtTrackerDashboard() {
   return (
     <div className="p-4 max-w-4xl mx-auto debt-tracker-dashboard">
       <h1 className="text-3xl font-bold mb-6">Debt Tracker Dashboard</h1>
-      <AddCardForm onAddCard={handleAddCard} />
-      <CardList cards={cards} onPayment={handlePayment} />
-      <DebtProgressChart progressData={getProgressData()} />
-      <TotalDebtDisplay totalDebt={totalDebt} />
+      <div className="dashboard-content">
+        <div className="main-content">
+          <AddCardForm onAddCard={handleAddCard} />
+          <CardList
+            cards={cards}
+            onPayment={handlePayment}
+            setCards={setCards}
+            setPayments={setPayments}
+            onRemove={handleRemoveCard}
+          />
+          <DebtProgressChart progressData={getProgressData()} />
+        </div>
+        <TotalDebtDisplay totalDebt={totalDebt} />
+      </div>
     </div>
   );
 }

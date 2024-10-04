@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./add-card-form.styles.scss";
+
 function AddCardForm({ onAddCard }) {
   const [newCard, setNewCard] = useState({
     name: "",
@@ -16,7 +17,7 @@ function AddCardForm({ onAddCard }) {
       newCard.paymentDate &&
       newCard.minimumPayment
     ) {
-      onAddCard({ ...newCard, id: Date.now() });
+      onAddCard({ ...newCard, id: Date.now(), isPaidOff: false });
       setNewCard({
         name: "",
         balance: "",
@@ -27,7 +28,7 @@ function AddCardForm({ onAddCard }) {
   };
 
   return (
-    <div className="mb-6 p-4 border rounded add-card-form">
+    <div className="add-card-form">
       <h2 className="text-xl font-bold mb-4">Add New Card</h2>
       <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
         <input

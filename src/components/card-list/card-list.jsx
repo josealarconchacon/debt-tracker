@@ -2,17 +2,24 @@ import React from "react";
 import CardItem from "../card-item/card-item";
 import "./card-list.styles.scss";
 
-function CardList({ cards, onPayment }) {
+const CardList = ({ cards, onPayment, setCards, setPayments, onRemove }) => {
   return (
-    <div className="mb-6 p-4 border rounded card-list">
-      <h2 className="text-xl font-bold mb-4">Your Cards</h2>
+    <div className="card-list">
+      <h2>Cards</h2>
       <div className="card-grid">
         {cards.map((card) => (
-          <CardItem key={card.id} card={card} onPayment={onPayment} />
+          <CardItem
+            key={card.id}
+            card={card}
+            onPayment={onPayment}
+            setCards={setCards}
+            setPayments={setPayments}
+            onRemove={onRemove}
+          />
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default CardList;
