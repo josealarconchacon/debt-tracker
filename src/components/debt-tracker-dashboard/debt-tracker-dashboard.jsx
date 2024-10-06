@@ -30,10 +30,12 @@ function DebtTrackerDashboard() {
     const updatedCards = cards.map((card) => {
       if (card.id === cardId) {
         const newBalance = Math.max(0, parseFloat(card.balance) - amount);
+
         return {
           ...card,
           balance: newBalance.toFixed(2),
-          isPaidOff: newBalance <= 0 ? true : card.isPaidOff,
+          isPaidOff: newBalance <= 0,
+          minimumPayment: newBalance <= 0 ? 0 : card.minimumPayment, // Reset minimum payment if paid off
         };
       }
       return card;
@@ -73,8 +75,6 @@ function DebtTrackerDashboard() {
           <CardList
             cards={cards}
             onPayment={handlePayment}
-            setCards={setCards}
-            setPayments={setPayments}
             onRemove={handleRemoveCard}
           />
           <DebtProgressChart progressData={getProgressData()} />
